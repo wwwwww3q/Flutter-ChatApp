@@ -18,3 +18,5 @@ export 'Model/user_model.dart';
 export 'Controller/chat_controller.dart';
 //View
 export 'View/home_page.dart';
+export 'View/chat_page.dart';
+export 'View/message_page.dart';

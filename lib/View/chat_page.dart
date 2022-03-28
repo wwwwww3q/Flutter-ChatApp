@@ -31,23 +31,26 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    const colorAppBar = Colors.black;
-
     return Consumer<ChatController>(
         builder: (context, chatController, child) => CustomScrollView(
               slivers: [
                 SliverAppBar(
+                  iconTheme: const IconThemeData(
+                    color: Colors.black, //change your color here
+                  ),
                   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                   //backgroundColor: Colors.amber,
                   elevation: 0, //shadow
                   automaticallyImplyLeading: false, //tat' cai' back tu dong
-                  leading: const CircleAvatar(
-                    backgroundImage: NetworkImage("https://randomuser.me/api/portraits/men/22.jpg"),
-                  ),
-                  title: const Text("Chats", style: TextStyle(color: colorAppBar)),
+                  leading: const Padding(
+                      padding: EdgeInsets.only(left: kDefaultPadding),
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage("https://randomuser.me/api/portraits/men/22.jpg"),
+                      )),
+                  title: const Text("Chats", style: TextStyle(color: Colors.black)),
                   actions: [
-                    IconButton(icon: const Icon(Icons.camera_alt, color: colorAppBar), onPressed: () {}),
-                    IconButton(icon: const Icon(Icons.edit, color: colorAppBar), onPressed: () {}),
+                    IconButton(icon: const Icon(Icons.camera_alt), onPressed: () {}),
+                    IconButton(icon: const Icon(Icons.edit), onPressed: () {}),
                   ],
                   bottom: PreferredSize(
                     child: Padding(

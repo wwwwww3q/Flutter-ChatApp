@@ -6,6 +6,7 @@ final kPrimarySwatchColor = const Color(0xFFF76969).toMaterialColor();
 final kSecondaryColor = const Color(0xFFFFE6E6).toMaterialColor();
 const kDefaultPadding = 10.0;
 
+
 BottomNavigationBarItem bottomNavBarItem(BuildContext context, {required String label, required IconData iconData}) => BottomNavigationBarItem(
     icon: Container(
         padding: const EdgeInsets.all(5),

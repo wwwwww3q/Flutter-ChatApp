@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chatapp/View/chat_page.dart';
-import 'package:provider/provider.dart';
 //import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '/all_page.dart';
 
@@ -33,14 +31,11 @@ class HomePageState extends State<HomePage> {
           decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20)), boxShadow: [
             BoxShadow(
               color: Colors.grey,
-              blurRadius: 5,
+              blurRadius: 1,
             )
           ]),
           child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              ),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(20.0)),
               child: BottomNavigationBar(
                 //backgroundColor: Colors.amber,
                 type: BottomNavigationBarType.fixed, //ko cho no thu nho? mat chu~

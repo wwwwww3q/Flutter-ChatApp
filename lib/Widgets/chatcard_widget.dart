@@ -14,7 +14,13 @@ class ChatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (BuildContext context) => const MessagePage(),
+            ));
+      },
       leading: Stack(
         children: [
           CircleAvatar(
