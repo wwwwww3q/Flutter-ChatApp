@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chatapp/View/chat_page.dart';
 //import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '/all_page.dart';
 
@@ -10,12 +11,14 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
+  final colorAppBar = Colors.black;
+  TextEditingController txtTimKiem = TextEditingController();
   int currentIndexBottomNav = 0;
   final List<Widget> _widgetPage = [
-    Container(),
-    Container(),
-    Container(),
-    Container(),
+    const ChatPage(),
+    const ChatPage(),
+    const ChatPage(),
+    const ChatPage(),
   ];
 
   @override
@@ -25,6 +28,27 @@ class HomePageState extends State<HomePage> {
       //huy keyboard khi bam ngoai man hinh
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          //backgroundColor: Colors.amber,
+          elevation: 0, //shadow
+          automaticallyImplyLeading: false, //tat' cai' back tu dong
+          leading: const CircleAvatar(
+            backgroundImage: NetworkImage("https://randomuser.me/api/portraits/men/22.jpg"),
+          ),
+          title: Text("Chats", style: TextStyle(color: colorAppBar)),
+          actions: [
+            IconButton(icon: Icon(Icons.camera_alt, color: colorAppBar), onPressed: () {}),
+            IconButton(icon: Icon(Icons.edit, color: colorAppBar), onPressed: () {}),
+          ],
+          bottom: PreferredSize(
+            child: Padding(
+              padding: const EdgeInsets.all(kDefaultPadding),
+              child: SearchWidget(txtTimKiem: txtTimKiem, onChanged: (value) {}, hintText: "Search Anyone"),
+            ),
+            preferredSize: const Size(0.0, 80.0),
+          ),
+        ),
         body: _widgetPage.elementAt(currentIndexBottomNav),
         //Footer
         bottomNavigationBar: Container(

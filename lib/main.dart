@@ -1,12 +1,10 @@
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:material_color_gen/material_color_gen.dart';
 import 'package:provider/provider.dart';
 import 'all_page.dart'; //lam` v cho no' nho? ra
 
 void main() {
   //chinh cai' mau` cua nen` pin
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.white));
+  //SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.green));
   runApp(const MyApp());
 }
 // SystemChrome.setSystemUIOverlayStyle(
@@ -26,7 +24,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             //brightness: Brightness.dark, //che'do toi' hay sang'
             //scaffoldBackgroundColor: const Color(0xFFEEEEEE),
-            primarySwatch: const Color(0xFFF76969).toMaterialColor(),
+            primarySwatch: kPrimarySwatchColor,
           ),
           home: const HomePage(),
         ),
