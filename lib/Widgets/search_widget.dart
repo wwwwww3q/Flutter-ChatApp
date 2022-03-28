@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chatapp/all_page.dart';
 
 class SearchWidget extends StatefulWidget {
-  final TextEditingController txtTimKiem;
+  final TextEditingController txtSearch;
   final ValueChanged<String> onChanged;
   final String hintText;
 
   const SearchWidget({
     Key? key,
-    required this.txtTimKiem,
+    required this.txtSearch,
     required this.onChanged,
     required this.hintText,
   }) : super(key: key);
@@ -29,13 +29,19 @@ class _SearchWidgetState extends State<SearchWidget> {
       height: 55,
       child: Center(
         child: TextField(
-          controller: widget.txtTimKiem,
+          controller: widget.txtSearch,
+          textInputAction: TextInputAction.search,
           decoration: InputDecoration(
             border: InputBorder.none,
             hintText: widget.hintText,
             prefixIcon: Icon(Icons.search, color: kPrimarySwatchColor),
-            suffixIcon: widget.txtTimKiem.text.isNotEmpty
-                ? IconButton(onPressed: () => setState(() => widget.txtTimKiem.clear()), icon: const Icon(Icons.close))
+            suffixIcon: widget.txtSearch.text.isNotEmpty
+                ? IconButton(
+                    onPressed: () {
+                      setState(() => widget.txtSearch.clear());
+                      widget.onChanged("");
+                    },
+                    icon: const Icon(Icons.close))
                 : null,
           ),
           onChanged: widget.onChanged,

@@ -45,7 +45,7 @@ class ChatCard extends StatelessWidget {
         chat.lastMessage,
         maxLines: 1,
         overflow: TextOverflow.ellipsis, //text dai` qua' thi` ...
-        style: TextStyle(color: chat.isSeen ? Theme.of(context).colorScheme.primary : null),
+        style: chat.isSeen ? TextStyle(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.bold) : null,
       ),
       trailing: Text(
         chat.time,
