@@ -17,25 +17,24 @@ class ChatCard extends StatelessWidget {
       onTap: () {},
       leading: Stack(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             radius: 25,
-            backgroundImage: NetworkImage("https://randomuser.me/api/portraits/men/23.jpg"),
+            backgroundImage: NetworkImage(chat.image),
           ),
-          //neu dang hoat dong thi` them cai bo tron` nho? nho?
-          if (chat.isActive)
-            Positioned(
-              right: 0,
-              bottom: 0,
-              child: Container(
-                height: 16,
-                width: 16,
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Theme.of(context).scaffoldBackgroundColor, width: 3),
-                ),
+          Positioned(
+            right: 0,
+            bottom: 0,
+            child: Container(
+              height: 16,
+              width: 16,
+              decoration: BoxDecoration(
+                //neu dang hoat dong thi` them cai bo tron` nho? nho?
+                color: chat.isActive ? Colors.green : Colors.grey,
+                shape: BoxShape.circle,
+                border: Border.all(color: Theme.of(context).scaffoldBackgroundColor, width: 3),
               ),
-            )
+            ),
+          )
         ],
       ),
       title: Text(

@@ -11,8 +11,8 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  final colorAppBar = Colors.black;
   TextEditingController txtTimKiem = TextEditingController();
+  final colorAppBar = Colors.black;
   int currentIndexBottomNav = 0;
   final List<Widget> _widgetPage = [
     const ChatPage(),

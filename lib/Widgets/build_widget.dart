@@ -18,3 +18,5 @@ BottomNavigationBarItem bottomNavBarItem(BuildContext context, {required String 
         margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary, borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: Icon(iconData, color: Colors.white)));
+
+
