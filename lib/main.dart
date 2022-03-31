@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'all_page.dart'; //lam` v cho no' nho? ra
 
 void main() {
   //chinh cai' mau` cua nen` pin
-  //SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.green));
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.white, statusBarIconBrightness: Brightness.dark));
   runApp(const MyApp());
 }
 // SystemChrome.setSystemUIOverlayStyle(

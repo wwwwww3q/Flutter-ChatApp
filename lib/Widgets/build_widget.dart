@@ -4,8 +4,7 @@ import 'package:material_color_gen/material_color_gen.dart';
 
 final kPrimarySwatchColor = const Color(0xFFF76969).toMaterialColor();
 final kSecondaryColor = const Color(0xFFFFE6E6).toMaterialColor();
-const kDefaultPadding = 10.0;
-
+const kDefaultPadding = 16.0;
 
 BottomNavigationBarItem bottomNavBarItem(BuildContext context, {required String label, required IconData iconData}) => BottomNavigationBarItem(
     icon: Container(
@@ -19,5 +18,3 @@ BottomNavigationBarItem bottomNavBarItem(BuildContext context, {required String 
         margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary, borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: Icon(iconData, color: Colors.white)));
-
-

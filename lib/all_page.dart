@@ -20,3 +20,4 @@ export 'Controller/chat_controller.dart';
 export 'View/home_page.dart';
 export 'View/chat_page.dart';
 export 'View/message_page.dart';
+export 'View/search_page.dart';

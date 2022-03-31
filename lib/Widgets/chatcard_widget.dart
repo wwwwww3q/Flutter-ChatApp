@@ -2,23 +2,25 @@ import 'package:flutter/material.dart';
 import '../all_page.dart';
 
 class ChatCard extends StatelessWidget {
+  final Chat chat;
+  //dang' ly' ra la` truyen` id hoac token gi` do' de sang trang chat se~ query ra.
+  //nhung API bi thieu' nen truyen` luon 1 cai'Object sang
+  final User user;
   const ChatCard({
     Key? key,
     required this.chat,
-    required this.press,
+    required this.user,
   }) : super(key: key);
-
-  final Chat chat;
-  final VoidCallback press;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
       onTap: () {
         Navigator.push(
             context,
             MaterialPageRoute<void>(
-              builder: (BuildContext context) => const MessagePage(),
+              builder: (BuildContext context) => MessagePage(user),
             ));
       },
       leading: Stack(
@@ -53,9 +55,19 @@ class ChatCard extends StatelessWidget {
         overflow: TextOverflow.ellipsis, //text dai` qua' thi` ...
         style: chat.isSeen ? TextStyle(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.bold) : null,
       ),
-      trailing: Text(
-        chat.time,
-        style: const TextStyle(color: Colors.grey),
+      trailing: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            chat.time,
+            style: const TextStyle(color: Colors.grey),
+          ),
+          if (chat.isSeen)
+            Container(
+                padding: const EdgeInsets.all(7),
+                decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary, shape: BoxShape.circle),
+                child: const Text("2", style: TextStyle(color: Colors.white))),
+        ],
       ),
     );
   }

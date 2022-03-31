@@ -1,11 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import '../all_page.dart';
 
 //code layout tham khao tu` google https://viblo.asia/p/flutter-viet-ung-dung-chat-voi-flutter-p1-GrLZD8GOZk0
 class MessagePage extends StatefulWidget {
-  const MessagePage({Key? key}) : super(key: key);
+  final User user;
+  const MessagePage(this.user, {Key? key}) : super(key: key);
 
   @override
   State createState() => MessagePageState();
@@ -14,6 +13,29 @@ class MessagePage extends StatefulWidget {
 class MessagePageState extends State<MessagePage> {
   final TextEditingController _textController = TextEditingController();
   bool _isComposing = false; //dang nhap chu~=false
+  late List<ChatMessage> messages;
+
+  @override
+  void initState() {
+    super.initState();
+    messages = [
+      ChatMessage(
+          user: widget.user, textedBefore: false, chatString: "Hello my name is" + widget.user.firstName! + widget.user.lastName!, mySend: false),
+      ChatMessage(user: widget.user, textedBefore: true, chatString: "${widget.user.age} Old", mySend: false),
+      ChatMessage(user: widget.user, textedBefore: true, chatString: "${widget.user.address} my address", mySend: false),
+      ChatMessage(user: widget.user, textedBefore: true, chatString: "company is ${widget.user.company!.name} ", mySend: false),
+      ChatMessage(user: widget.user, textedBefore: true, chatString: "Nice to meet you", mySend: false),
+      ChatMessage(user: widget.user, textedBefore: false, chatString: "Hello Nice to meet you too", mySend: true),
+      ChatMessage(
+          user: widget.user,
+          textedBefore: false,
+          chatString:
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          mySend: true),
+      ChatMessage(user: widget.user, textedBefore: false, chatString: "1234567890", mySend: true),
+      ChatMessage(user: widget.user, textedBefore: false, chatString: "Funny", mySend: false),
+    ];
+  }
 
   @override
   void dispose() {
@@ -48,8 +70,8 @@ class MessagePageState extends State<MessagePage> {
             //neu' textfield ko rong~ thi` dc phep nhan' nut, ngc lai thi` nhan' ko dc
             IconButton(
                 icon: Icon(
-                  Icons.emoji_emotions_outlined,
-                  color: Theme.of(context).colorScheme.primary,
+                  Icons.send,
+                  color: _isComposing ? Theme.of(context).colorScheme.primary : Colors.grey,
                 ),
                 onPressed: _isComposing ? () => _handleSubmitted(_textController.text) : null),
           ],
@@ -77,16 +99,16 @@ class MessagePageState extends State<MessagePage> {
     //textField sẽ clear chu~
     _textController.clear();
     //dat lai trang thai' dang soan =false
-    setState(() => _isComposing = false);
     if (text.isNotEmpty) {
       //neu' textField ko rong~ thi` tao 1 widget tin nhan' moi'
-      // final mess = Message(khachHangId: Auth.khachHang.id, body: text);
-      // //them vao` danh sach tin nhan' o phan tu? dau` tien
-      // final sucssess = await Provider.of<MessageController>(context, listen: false).addData(mess);
-      // if (sucssess)
-      //   print("Them thanh cong");
-      // else
-      //   print("Them that bai");
+      final mess = ChatMessage(chatString: text, mySend: true, user: widget.user, textedBefore: false);
+      //them vao` danh sach tin nhan' o phan tu? dau` tien
+      setState(() {
+        //neu la` them tu duoi' len
+        //messages.insert(0, mess);
+        messages.add(mess);
+        _isComposing = false;
+      });
     }
   }
 
@@ -115,9 +137,9 @@ class MessagePageState extends State<MessagePage> {
                 child: ListTile(
               leading: Stack(
                 children: [
-                  const CircleAvatar(
+                  CircleAvatar(
                     //radius: 25,
-                    backgroundImage: NetworkImage("https://randomuser.me/api/portraits/men/22.jpg"),
+                    backgroundImage: NetworkImage(widget.user.image!),
                   ),
                   Positioned(
                     right: 0,
@@ -127,7 +149,7 @@ class MessagePageState extends State<MessagePage> {
                       width: 16,
                       decoration: BoxDecoration(
                         //neu dang hoat dong thi` them cai bo tron` nho? nho?
-                        color: Random().nextBool() ? Colors.green : Colors.grey,
+                        color: true ? Colors.green : Colors.grey,
                         shape: BoxShape.circle,
                         border: Border.all(color: Theme.of(context).scaffoldBackgroundColor, width: 3),
                       ),
@@ -135,9 +157,9 @@ class MessagePageState extends State<MessagePage> {
                   )
                 ],
               ),
-              title: const Text(
-                "chat.name",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              title: Text(
+                widget.user.firstName! + widget.user.lastName!,
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
               subtitle: const Text(
                 "online",
@@ -167,11 +189,9 @@ class MessagePageState extends State<MessagePage> {
               // Flexible dua theo widget, size cua thiet bi ma` thay doi?
               child: ListView.builder(
                 padding: const EdgeInsets.all(8.0),
-                reverse: true, //tu duoi' len
-                itemCount: 10,
-                itemBuilder: (context, index) => ChatMessage(
-                  chatString: getRandomString(100),
-                ),
+                //reverse: true, //tu duoi' len
+                itemCount: messages.length,
+                itemBuilder: (context, index) => messages[index],
               ),
             ),
             // Divider(height: 1.0),
@@ -195,22 +215,41 @@ class MessagePageState extends State<MessagePage> {
 
 class ChatMessage extends StatelessWidget {
   final String chatString;
-  const ChatMessage({Key? key, required this.chatString}) : super(key: key);
+  final bool mySend;
+  //
+  final User user;
+  final bool textedBefore; //thuong` thuong` kophai nhu v, cach' nay` la` che' lai.
+  const ChatMessage({Key? key, required this.chatString, required this.mySend, required this.textedBefore, required this.user}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     //minh` nhan', xac' dinh no' thong qua thuoc tinh' gi` gi` do', o day cho dai random
-    if (Random().nextBool()) {
+    if (mySend) {
       return Align(
         alignment: Alignment.centerRight,
         child: Container(
-            margin: const EdgeInsets.all(kDefaultPadding),
+            margin: const EdgeInsets.only(bottom: 10),
             padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width / (1.5)),
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.75),
             decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(30)), color: Colors.blue),
             child: Text(chatString, style: const TextStyle(color: Colors.white))), //noi dung chat
       );
     }
     //ng`khac' nhan'
+    if (textedBefore) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(width: 55),
+          Container(
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.75),
+            margin: const EdgeInsets.only(bottom: 15),
+            padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+            decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(30)), color: Colors.grey.withOpacity(0.4)),
+            child: Text(chatString), //noi dung chat
+          ),
+        ],
+      );
+    }
     return Container(
       margin: const EdgeInsets.symmetric(vertical: kDefaultPadding),
       child: Row(
@@ -218,15 +257,15 @@ class ChatMessage extends StatelessWidget {
         children: [
           Container(
             margin: const EdgeInsets.only(right: 16.0),
-            child: const CircleAvatar(child: Text("A")), //hinh anh avt
+            child: CircleAvatar(backgroundImage: NetworkImage(user.image!)), //hinh anh avt
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("Admin"), //ten
+              Text(user.firstName! + user.lastName!), //ten
               Container(
                 //width: MediaQuery.of(context).size.width / (1.3),
-                constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width / (1.3)),
+                constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.75),
                 margin: const EdgeInsets.only(top: 5.0),
                 padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                 decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(30)), color: Colors.grey.withOpacity(0.4)),
@@ -239,9 +278,3 @@ class ChatMessage extends StatelessWidget {
     );
   }
 }
-
-//phan` nay` random chuoi~ copy tu` google thay cho messenge
-const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-Random _rnd = Random();
-
-String getRandomString(int length) => String.fromCharCodes(Iterable.generate(length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));

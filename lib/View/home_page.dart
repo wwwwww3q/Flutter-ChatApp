@@ -28,10 +28,12 @@ class HomePageState extends State<HomePage> {
         body: _widgetPage.elementAt(currentIndexBottomNav),
         //Footer
         bottomNavigationBar: Container(
-          decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20)), boxShadow: [
+          decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(20)), boxShadow: [
             BoxShadow(
-              color: Colors.grey,
-              blurRadius: 1,
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 10,
+              offset: const Offset(0, 8), // changes position of shadow
             )
           ]),
           child: ClipRRect(
